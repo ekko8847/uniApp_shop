@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import home from './modules/home.js'
+import category from './modules/category.js'
+import cart from './modules/cart.js'
 
 const state = {}
 const mutations = {}
@@ -16,6 +18,8 @@ export default new Vuex.Store({
 	actions,
 	getters,
 	modules:{
-		home
+		home,
+		category,
+		cart
 	}
 })

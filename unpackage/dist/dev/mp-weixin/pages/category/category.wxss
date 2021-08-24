@@ -1,0 +1,74 @@
+.categroyContainer {
+  height: 100%;
+}
+.categroyContainer .header {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  height: 80rpx;
+  box-sizing: border-box;
+}
+.categroyContainer .header .center {
+  width: 90%;
+  height: 60rpx;
+  background-color: #aaa;
+  font-size: 28rpx;
+  text-align: center;
+  line-height: 60rpx;
+}
+.categroyContainer .main {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.categroyContainer .main .mainLeft {
+  width: 150rpx;
+}
+.categroyContainer .main .mainLeft .leftItem {
+  width: 100%;
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 28rpx;
+}
+.categroyContainer .main .mainLeft .leftItem.active {
+  background-color: #87ceeb;
+  border-bottom: 1px solid #f00;
+}
+.categroyContainer .main .mainRight {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  box-sizing: border-box;
+}
+.categroyContainer .main .mainRight .rightScroll .scrollItem .rightImg {
+  display: block;
+  width: 520rpx;
+  height: 190rpx;
+  margin: 20rpx auto;
+}
+.categroyContainer .main .mainRight .rightScroll .scrollItem .goodsList {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.categroyContainer .main .mainRight .rightScroll .scrollItem .goodsList .goodsItem {
+  width: 33.333333%;
+  text-align: center;
+}
+.categroyContainer .main .mainRight .rightScroll .scrollItem .goodsList .goodsItem .goodsImg {
+  width: 100%;
+  height: 144rpx;
+}
+.categroyContainer .main .mainRight .rightScroll .scrollItem .goodsList .goodsItem .goodsText {
+  font-size: 28rpx;
+}
+

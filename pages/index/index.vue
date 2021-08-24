@@ -11,18 +11,12 @@
 
 		<scroll-view scroll-x="true" enable-flex class="navScroll">
 			<view class="navItem" :class="{ active: defaultId === -1 }" @click="defaultId = -1">推荐</view>
-			<view 
-				@click="defaultId = nav.L1Id" 
-				v-for="(nav, index) in navList" 
-				:key="nav.L1Id" 
-				class="navItem" 
-				:class="{ active: defaultId === nav.L1Id }">
-				{{ nav.text }}
-			</view>
+			<view @click="defaultId = nav.L1Id" v-for="(nav, index) in navList" :key="nav.L1Id" class="navItem" :class="{ active: defaultId === nav.L1Id }">{{ nav.text }}</view>
 		</scroll-view>
 
 		<scroll-view scroll-y="true" class="mainScroll" enable-flex>
-			<view class="mainItem">
+			<view class="mainItem" v-show="defaultId === -1">
+				<!-- 推荐的内容 -->
 				<swiper class="banner" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
 					<swiper-item>
 						<view class="swiper-item">
@@ -30,10 +24,14 @@
 						</view>
 					</swiper-item>
 					<swiper-item>
-						<view class="swiper-item"><image src="https://yanxuan.nosdn.127.net/feae545bd3173ff2f68a1d70b0fe5794.png?type=webp&imageView&quality=75&thumbnail=750x0"></image></view>
+						<view class="swiper-item">
+							<image src="https://yanxuan.nosdn.127.net/feae545bd3173ff2f68a1d70b0fe5794.png?type=webp&imageView&quality=75&thumbnail=750x0"></image>
+						</view>
 					</swiper-item>
 					<swiper-item>
-						<view class="swiper-item"><image src="https://yanxuan.nosdn.127.net/7632697b0cfb772aa9c6230acdbac3c9.jpg?type=webp&imageView&quality=75&thumbnail=750x0"></image></view>
+						<view class="swiper-item">
+							<image src="https://yanxuan.nosdn.127.net/7632697b0cfb772aa9c6230acdbac3c9.jpg?type=webp&imageView&quality=75&thumbnail=750x0"></image>
+						</view>
 					</swiper-item>
 				</swiper>
 				<view class="iconList">
@@ -50,16 +48,20 @@
 				</view>
 				<Floor v-for="(floor, index) in floorList" :key="index" :floor="floor"></Floor>
 			</view>
+			<!-- 推荐之后的内容 -->
+			<view v-show="defaultId !== -1"><Card :defaultId="defaultId"></Card></view>
 		</scroll-view>
 	</view>
 </template>
 
 <script>
 import Floor from './components/Floor/index.vue';
+import Card from './components/Card/index.vue';
 import { mapGetters } from 'vuex';
 export default {
 	components: {
-		Floor
+		Floor,
+		Card
 	},
 	data() {
 		return {
