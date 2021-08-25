@@ -156,6 +156,9 @@ import request from "../../utils/request.js"
 	const mutations = {
 		ADD_CART(state,cart){
 			state.cartList.push(cart)
+		},
+		DELETE_CART(state,index){
+			state.cartList.splice(index,1)
 		}
 	}
 	const actions = {

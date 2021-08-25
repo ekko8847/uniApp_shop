@@ -15,7 +15,7 @@
 				<!-- 购物车列表 -->
 		<view class="cartList">
 			<view class="cartItem" v-for="(cart,index) in cartList" :key="cart.id">
-				<text class='iconfont icon-xuanzhong' :class="{selected:cart.isCheck}"></text>
+				<text class='iconfont icon-xuanzhong' :class="{selected:cart.isCheck}" @click="changeIsCheck(cart)"></text>
 				<view class="shopItem">
 					<image class="shopImg" :src="cart.primaryPicUrl"></image>
 					<view class="shopInfo">
@@ -25,18 +25,18 @@
 				</view>
 				<!-- 控制数量 -->
 				<view class="countCtrl">
-					<text class="add"> + </text>
+					<text class="add"  @click="changeCartNum(cart, 1)"> + </text>
 					<text class="count">{{cart.count}}</text>
-					<text class="del"> - </text>
+					<text class="del"  @click="changeCartNum(cart, -1,index)"> - </text>
 				</view>
 			</view>
 		</view>
 		<!-- 底部下单 -->
 		<view class="cartFooter">
-			<text class='iconfont icon-xuanzhong selected'></text>
-			<text class="allSelected">已选 0</text>
+			<text class='iconfont icon-xuanzhong ' :class="{selected: isCheckAll}" @click="changeIsCheckAll"></text>
+			<text class="allSelected">已选 {{checkNum}}</text>
 			<view class="right">
-				<text class="totalPrice">合计: 0</text>
+				<text class="totalPrice">合计: {{allMoney}}</text>
 				<text class="preOrder">下单</text>
 			</view>
 		</view>
@@ -50,10 +50,66 @@
 <script>
 	import {mapState} from 'vuex'
 	export default {
+		methods: {
+			// 修改购物车数量及删除操作
+			changeCartNum(cart, disNum, index) {
+				cart.count += disNum; //这行就已经修改数量了
+				if (cart.count === 0) {
+					// 代表用户想要删除这个购物车商品
+					wx.showModal({
+						title: `你确定要删除${cart.name}吗？`,
+						success: res => {
+							if (res.confirm) {
+								// 用户点击确定，我们要把当前这个购物车数据删除
+								this.$store.commit('DELETE_CART', index);
+							} else {
+								// 用户点击取消
+								cart.count = 1;
+							}
+						}
+					});
+				}
+			},
+			// 修改单个的选中状态
+			changeIsCheck(cart){
+				cart.isCheck = !cart.isCheck
+			},
+			// 修改多个的选中状态
+			changeIsCheckAll(){
+				let data = !this.isCheckAll
+				this.cartList.forEach(item => {
+					if(item.isCheck === data) return 
+					item.isCheck = data
+				})
+			}
+		},
 		computed:{
 			...mapState({
 				cartList:state => state.cart.cartList
-			})
+			}),
+			// 计算已选择的数量
+			checkNum() {
+				return this.cartList.reduce((prev, item) => {
+					if (item.isCheck) {
+						prev += item.count;
+					}
+					return prev;
+				}, 0);
+			},
+			// 计算购物车的总价
+			allMoney() {
+				return this.cartList.reduce((prev, item) => {
+					if (item.isCheck) {
+						prev += item.count * item.counterPrice;
+					}
+					return prev;
+				}, 0);
+			},
+			
+			// 计算是否全选
+			isCheckAll() {
+				return this.cartList.every(item => item.isCheck) && this.cartList.length > 0;
+			}
 		}
 	}
 </script>

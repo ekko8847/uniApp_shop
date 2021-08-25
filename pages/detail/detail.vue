@@ -78,6 +78,7 @@
 					this.$set(obj,'isCheck',true)
 					this.$store.commit('ADD_CART',obj)
 				}
+				
 			}
 		}
 	}
